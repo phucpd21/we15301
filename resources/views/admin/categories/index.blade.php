@@ -23,7 +23,7 @@
                     <td>{{ $cate->id }}</td>
                     <td>{{ $cate->name }}</td>
                     <td>
-                        <a href="{{ route('admin.categories.edit', ['id' => $cate->id]) }}"
+                        <a href="{{ route('admin.categories.edit', ['category' => $cate->id]) }}"
                             class="btn btn-primary">Edit</a>
                     </td>
                     <td>
@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tắt</button>
-                                        <form action="{{ route('admin.categories.delete', ['id' => $cate->id]) }}"
+                                        <form action="{{ route('admin.categories.delete', ['category' => $cate->id]) }}"
                                             method="post">
                                             @csrf
                                             <button type="submit" class="btn btn-primary">Xóa</button>

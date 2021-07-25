@@ -11,7 +11,7 @@
 
         <div class="row">
             <div class="col-6">
-                <a href="{{ route('admin.users.index') }}" class="btn btn-success">Create</a>
+                <a href="{{ route('admin.users.create') }}" class="btn btn-success">Create</a>
             </div>
             <div class="col-6"></div>
         </div>
@@ -23,6 +23,7 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Adress</td>
+                    <td>Count invoices</td>
                     <td>Gender</td>
                     <td>Role</td>
                 </tr>
@@ -31,15 +32,20 @@
                 @foreach ($listUser as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
+                        <td>
+                            <a href="{{ route('admin.users.show', ['user' => $user->id]) }}">
+                                {{ $user->name }}
+                            </a>
+                        </td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->address }}</td>
+                        <td>{{ $user->invoices->count() }}</td>
                         <td>{{ $user->gender == config('common.user.gender.male') ? 'Nam' : 'Nữ' }}</td>
                         <td>{{ $user->role == config('common.user.role.user') ? 'User' : 'Admin' }}</td>
 
                         <td>
-                            <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}"
-                                class="btn btn-primary">Update</a>
+                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}"
+                                class="btn btn-primary">Edit</a>
                         </td>
                         <td>
                             {{-- <button class="btn btn-danger" data-target>Delete</button> --}}
@@ -61,15 +67,17 @@
                                             Xóa bản ghi này
                                         </div>
                                         <div class="modal-footer">
-                                            <form method="POST" action="{{ route('admin.users.delete', ['id' => $user->id]) }}">
+                                            <form method="POST"
+                                                action="{{ route('admin.users.delete', ['user' => $user->id]) }}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary">Xóa</button>
                                             </form>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Đóng</button>
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
                         </td>
                     </tr>
                 @endforeach

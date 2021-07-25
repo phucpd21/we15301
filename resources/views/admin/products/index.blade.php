@@ -38,26 +38,36 @@
                             <td>{{ $product->price }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td>
-                                <a href="{{ route('admin.products.edit', ['id'=> $product->id]) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('admin.products.edit', ['product' => $product->id]) }}"
+                                    class="btn btn-primary">Edit</a>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal_{{ $product->id }}">
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#confirm_delete_{{ $product->id }}" value="delete">
                                     Delete
                                 </button>
 
-                                <div class="modal fade" id="exampleModal_{{ $product->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                {{-- <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#confirm_delete_{{ $user->id }}" value="Delete">Delete</button> --}}
+
+                                <div class="modal fade" id="confirm_delete_{{ $product->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+                                    <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 Xác nhận xóa
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                <form action="{{ route('admin.products.delete', ['id' => $product->id]) }}" method="POST">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Đóng</button>
+                                                <form
+                                                    action="{{ route('admin.products.delete', ['product' => $product->id]) }}"
+                                                    method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger">Xóa</button>
                                                 </form>

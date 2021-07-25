@@ -17,6 +17,9 @@
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" name="name" class="form-control">
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary my-2">Thêm vào</button>
                 </form>

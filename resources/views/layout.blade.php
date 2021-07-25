@@ -41,7 +41,7 @@
 
 
 
-    <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.min.js') }}"></script>
+    {{-- <script src="{{ asset('bootstrap-5.0.2/js/bootstrap.min.js') }}"></script> --}}
     <script src="{{ asset('bootstrap-5.0.2/sidebar/sidebar.js') }}"></script>
 
 

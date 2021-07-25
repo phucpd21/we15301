@@ -5,19 +5,35 @@
 
 @section('contents')
     <div class="col-6">
-        <form action="{{ route('admin.users.update', ['id'=>$user->id]) }}" method="post" class="my-5">
+        <form action="{{ route('admin.users.update', ['user'=>$user->id]) }}" method="post" class="my-5">
             @csrf
             <div class="form-group">
                 <label>Name</label>
                 <input class="form-control" type="text" name="name" value="{{ $user->name }}">
+                @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" type="email" name="email" value="{{ $user->email }}">
+                <input class="form-control" type="email" value="{{ $user->email }}">
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" type="password" name="password">
+                @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label>Adress</label>
-                <input class="form-control" type="text" name="adress" value="{{ $user->address }}">
+                <input class="form-control" type="text" name="address" value="{{ $user->address }}">
+                @error('address')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label>Gender</label>
@@ -26,6 +42,9 @@
                     <option value="1" {{ $user->gender == 1 ? 'selected' : '' }} >Female</option>
                     <option value="2" {{ $user->gender == 2 ? 'selected' : '' }} >Other</option>
                 </select>
+                @error('gender')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label>Role</label>
@@ -33,6 +52,9 @@
                     <option value="0" {{ $user->role == 0 ? 'selected' : '' }} >User</option>
                     <option value="1" {{ $user->role == 1 ? 'selected' : '' }} >Admin</option>
                 </select>
+                @error('role')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary mt-3">Update</button>
         </form>

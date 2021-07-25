@@ -49,6 +49,14 @@ Route -> Điều khiển
 
 4. Tạo model
     php artisan make:model <TenModel>
-5. Quy tắc đặt tên
+
+5. Tạo controller
+    php artisan make:controller Admin/CategoryController
+
+6. Quy tắc đặt tên
     - Tên table trong DB: users, products, categories
     - Tên model: User, Product, SinhVien, LopHoc
+
+7. Tạo file validate
+    php artisan make:request Admin/User/StoreRequest
+    php artisan make:request Admin/User/UpdateRequest

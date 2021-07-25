@@ -43,4 +43,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    // mutator
+    // set{AttributeName}Attribute
+    public function setPasswordAttribute($value)
+    {
+        $hashed = bcrypt($value);
+        $this->attributes['password'] = $hashed;
+    }
 }
