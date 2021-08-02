@@ -46,16 +46,11 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    public function update(Product $product, UpdateRequest $request)
+    public function update( UpdateRequest $request, Product $product)
     {
-        $request = $request->all();
-        if (empty($product)) {
-            abort(403, 'Sản phẩm không tồn tại, hãy kiểm tra lại');
-        }
-        $request['image'] = 'link-anh';
-        if (!$product->update($request)) {
-            abort(403, 'Cập nhật sản phẩm không thành công');
-        }
+        $data = $request->all();
+        $data['image'] = 'link-anh';
+        $product->update($data);
         return redirect()->route('admin.products.index');
     }
 

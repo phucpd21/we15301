@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Rules\RuleEmailUniqueOnUpdate;
+use App\Rules\RulePasswordOnUpdate;
 class UpdateRequest extends FormRequest
 {
     /**
@@ -23,10 +24,11 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->request);
         return [
             'name' => 'required|max:30',
-            'email' => 'required|email',
-            'password' => 'min:8|max:50|same:password',
+            'email' => ['required','email', new RuleEmailUniqueOnUpdate() ],
+            'password' => [ new RulePasswordOnUpdate() ],
             'address' => 'required',
             'role' => 'required|in:'. implode(',' ,config('common.user.role')),
             'gender' => 'required|in:'. implode(',' ,config('common.user.gender')),
@@ -39,8 +41,6 @@ class UpdateRequest extends FormRequest
             'required' => ':attribute không được để trống',
 
             'name.max' => 'Tên không được quá 30 ký tự',
-            'password.max' => 'Mật khẩu không được quá 50 ký tự',
-            'password.min' => 'Mật khẩu phải 8 ký tự trở lên',
             'role.in' => 'Quyền hạn không hợp lệ, hãy kiểm tra lại',
             'gender.in' => 'Giới tính không hợp lệ, hãy kiểm tra lại',
 
@@ -52,7 +52,6 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'Họ tên',
             'email' => 'Email',
-            'password' => 'Mật khẩu',
             'address' => 'Địa chỉ',
             'role' => 'Quyền hạn',
             'gender' => 'Giới tính',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Category;
 
+use App\Rules\RuleNameUniqueOnUpdate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -24,16 +25,21 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|min:2|max:50|unique:categories,name"
+            "name" => ["required","min:2","max:50", new RuleNameUniqueOnUpdate('categories')]
         ];
     }
 
     public function messages() {
         return [
-            "name.required" => "Tên danh mục sản phẩm không được để trống",
-            "name.min" => "Tên danh mục sản phẩm phải có 2 ký tự trở lên",
-            "name.max" => "Tên danh mục sản phẩm không được quá 50 ký tự",
-            "name.unique" => "Tên danh mục sản phẩm đã tồn tại"
+            "name.required" => ":attribute không được để trống",
+            "name.min" => ":attribute phải có 2 ký tự trở lên",
+            "name.max" => ":attribute không được quá 50 ký tự",
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'name' =>  "Tên danh mục sản phẩm"
         ];
     }
 }

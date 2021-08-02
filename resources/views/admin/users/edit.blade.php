@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" type="email" value="{{ $user->email }}">
+                <input class="form-control" type="email" name="email" value="{{ $user->email }}">
                 @error('email')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

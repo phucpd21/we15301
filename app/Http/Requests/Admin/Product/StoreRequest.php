@@ -47,7 +47,8 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            "required" => ":attribute không dược để trống",
+            "required" => ":attribute không được để trống",
+            "name.unique" => "Tên sản phẩm đã tồn tại",
             "price.min" => "Giá sản phẩm phải lớn hơn 0",
             "quantity.min" => "Số lượng sản phẩm phải lớn hơn 0",
             "category_id.in" => "Không được chọn danh mục sản phẩm không tồn tại"

@@ -25,7 +25,7 @@ class UserController extends Controller
         // SELECT * FROM users;
         $listUser = User::all();
         // SELECT * FROM invoices WHERE user_id IN (...)
-        $listUser->load(['invoices']);
+        // $listUser->load(['invoices']);
 
         // dd($listUser->first()->invoices);
 
@@ -44,7 +44,16 @@ class UserController extends Controller
 
     public function store(StoreRequest $request)
     {
-        User::create($request->all());
+        $data = $request->except('_token');
+        $result = User::create($data);
+
+        if($request->ajax() == true) {
+            return response()->json([
+                'status' => 200,
+                'message' =>'ok'
+            ]);
+        }
+        // User::create($request->all());
         return redirect()->route('admin.users.index');
     }
 

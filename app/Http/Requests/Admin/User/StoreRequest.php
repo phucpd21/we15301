@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Rules\RuleEmailUniqueOnUpdate;
 class StoreRequest extends FormRequest
 {
     /**
@@ -27,7 +27,11 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|max:30',
             'password' => 'required|min:8|max:50',
-            'email' => 'required| email|unique:users,email',
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email'
+            ],
             'address' => 'required',
             'role' => 'required|in:'. implode(',' ,config('common.user.role')),
             'gender' => 'required|in:'. implode(',' ,config('common.user.gender')),

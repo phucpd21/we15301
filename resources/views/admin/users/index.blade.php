@@ -11,7 +11,63 @@
 
         <div class="row">
             <div class="col-6">
-                <a href="{{ route('admin.users.create') }}" class="btn btn-success">Create</a>
+                <button class="btn btn-success" role="button" data-toggle="modal" data-target="#model_create">New</button>
+
+                <div class="modal fade" id="model_create" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                                <button type="button" class="btn-close" data-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('admin.users.store') }}" method="post" class="my-5" id="form_create">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input class="form-control" type="text" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input class="form-control" type="email" name="email">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input class="form-control" type="password" name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adress</label>
+                                        <input class="form-control" type="text" name="address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select class="form-control" name="gender">
+                                            <option value="0">Male</option>
+                                            <option value="1">Female</option>
+                                            <option value="2">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <select class="form-control" name="role">
+                                            <option value="0">User</option>
+                                            <option value="1">Admin</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Create</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Đóng</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-6"></div>
         </div>
@@ -88,3 +144,46 @@
     @endif
 
 @endsection
+
+@push('script')
+    <script>
+        $('#form_create').on('submit', function(event) {
+            event.preventDefault();
+            let name = $("#form_create input[name='name']").val();
+            let email = $("#form_create input[name='email']").val();
+            let address = $("#form_create input[name='address']").val();
+            let password = $("#form_create input[name='password']").val();
+            let gender = $("#form_create select[name='gender']").val();
+            let role = $("#form_create select[name='role']").val();
+            let _token = $("#form_create input[name='_token']").val();
+            const data = {
+                _token,
+                name,
+                email,
+                address,
+                password,
+                gender,
+                role
+            };
+            url = 'http://127.0.0.1:8000/admin/users/store'
+            fetch(url, {
+                method: 'post',
+                body: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-Token": _token,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                // if(data.status == 200) {
+                //     console.log('Thành công')
+                // }
+            })
+        });
+    </script>
+@endpush
+
