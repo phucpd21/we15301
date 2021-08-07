@@ -45,7 +45,7 @@ class UserController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->except('_token');
-        $result = User::create($data);
+        User::create($data);
 
         if($request->ajax() == true) {
             return response()->json([
@@ -53,8 +53,7 @@ class UserController extends Controller
                 'message' =>'ok'
             ]);
         }
-        // User::create($request->all());
-        return redirect()->route('admin.users.index');
+        // return redirect()->route('admin.users.index');
     }
 
     public function edit(User $user)

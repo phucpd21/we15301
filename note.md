@@ -60,3 +60,20 @@ Route -> Điều khiển
 7. Tạo file validate
     php artisan make:request Admin/User/StoreRequest
     php artisan make:request Admin/User/UpdateRequest
+
+8. php make:auth bản cũ
+9. Đăng nhập
+a,
+- model sử dụng để đăng nhập phải extends : Illuminate\Foundation\Auth\User as Authenticatable;
+b, vào config\auth.php -> cấu hình đăng nhập
+ - defaults: mặc định xác thực
+ - guards: 2 cấu hình xác thực
+ - providers: 
+
+10. Middleware
+php artisan make:middleware AuthenticationMiddleware
+Viết đk trong file đó rồi thêm vào kernel.php để thêm vào
+
+service container, provider
+https://viblo.asia/s/laravel-the-beauty-Wj53Om3p56m
+https://laravel.com/docs/8.x/views

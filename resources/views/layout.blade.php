@@ -17,14 +17,19 @@
         {{-- HEADER --}}
         <div class="col-12 text-center bg-primary">
             HEADER
+            @auth()
+                <a href="{{ route('auth.logout') }}">Đăng xuất</a>
+            @endauth
         </div>
         {{-- /E-HEADER --}}
 
         <div class="col-12 row">
             {{-- SIDEBAR --}}
-            <div class="col-2">
-                @include('partials.sidebar')
-            </div>
+            @auth()
+                <div class="col-2">
+                    @include('partials.sidebar')
+                </div>
+            @endauth
             {{-- /E-SIDEBAR --}}
 
             {{-- CONTENT --}}

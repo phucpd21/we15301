@@ -4,6 +4,10 @@ namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\RuleEmailUniqueOnUpdate;
+
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+
 class StoreRequest extends FormRequest
 {
     /**
@@ -63,4 +67,10 @@ class StoreRequest extends FormRequest
             'gender' => "Giới tính",
         ];
     }
+
+    public function failedValidation(Validator $validator) {
+        //write your bussiness logic here otherwise it will give same old JSON response
+       throw new HttpResponseException(response()->json($validator->errors(), 400));
+
+   }
 }

@@ -31,4 +31,8 @@
             @endforeach
         </tbody>
     </table>
+
+    {{-- @livewire('component', ['user' => $user], key($user->id)) --}}
+    {{-- @each('view.name', $collection, 'variable', 'view.empty') --}}
+    {{-- @production @endonce --}}
 @endsection

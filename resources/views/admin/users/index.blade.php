@@ -13,17 +13,17 @@
             <div class="col-6">
                 <button class="btn btn-success" role="button" data-toggle="modal" data-target="#model_create">New</button>
 
-                <div class="modal fade" id="model_create" tabindex="-1"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+                <div class="modal fade" id="model_create" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
-                                <button type="button" class="btn-close" data-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('admin.users.store') }}" method="post" class="my-5" id="form_create">
+                                <form action="{{ route('admin.users.store') }}" method="post" class="my-5"
+                                    id="form_create">
                                     @csrf
                                     <div class="form-group">
                                         <label>Name</label>
@@ -57,12 +57,12 @@
                                             <option value="1">Admin</option>
                                         </select>
                                     </div>
+                                    <div id="errs"></div>
                                     <button type="submit" class="btn btn-primary mt-3">Create</button>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
 
                             </div>
                         </div>
@@ -149,6 +149,7 @@
     <script>
         $('#form_create').on('submit', function(event) {
             event.preventDefault();
+
             let name = $("#form_create input[name='name']").val();
             let email = $("#form_create input[name='email']").val();
             let address = $("#form_create input[name='address']").val();
@@ -156,8 +157,8 @@
             let gender = $("#form_create select[name='gender']").val();
             let role = $("#form_create select[name='role']").val();
             let _token = $("#form_create input[name='_token']").val();
+
             const data = {
-                _token,
                 name,
                 email,
                 address,
@@ -165,25 +166,44 @@
                 gender,
                 role
             };
-            url = 'http://127.0.0.1:8000/admin/users/store'
+            url = 'http://localhost:8000/admin/users/store'
+            let errs = [];
+
+            function createNode(element) {
+                return document.createElement(element);
+            }
+
+            function renderErrors(data, key) {
+                let span = createNode('span')
+                span.classList.add('text-danger')
+                span.innerHTML = `${data[key]}`
+                $(`#form_create input[name='${key}']`).parent().append(span);
+            }
+
+
             fetch(url, {
-                method: 'post',
-                body: JSON.stringify(data),
-                headers: {
-                    "X-CSRF-Token": _token,
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data);
-                // if(data.status == 200) {
-                //     console.log('Thành công')
-                // }
-            })
+                    method: 'post',
+                    body: JSON.stringify(data),
+                    headers: {
+                        "X-CSRF-Token": _token,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status == 200) {
+                        console.log(data)
+                    } else {
+                        for (const key in data) {
+                            renderErrors(data, key)
+                        }
+                    }
+                })
+                .catch(err => console.log(err))
         });
     </script>
 @endpush
-
